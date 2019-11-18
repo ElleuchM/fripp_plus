@@ -3,7 +3,6 @@ class annonce_vetement{
 	private $id_an;
 	private $nom_an;
 	private $prix_an;
-	private $pt_taille_an;
 	private $description_an;
 	private $date_pub_an;
 	private $couleur_an;
