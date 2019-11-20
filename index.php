@@ -1,8 +1,8 @@
 <?php
 include_once "includes/connexion.php";
 //initialisation des variables $controller et $action
-$controller = "Abonnee";
-$action = "auth1";
+$controller = "";
+$action = "";
 //Recupération
 if (isset($_REQUEST["controller"]))
     $controller = $_REQUEST["controller"];
@@ -33,7 +33,7 @@ if (isset($_REQUEST["action"]))
 
 
 <body>
-    <?php include "controllers/$controller.controller.php"; ?>
+<input type="button" value=" Créer une annonce" onclick="window.location.href='index.php?controllers=annonce_vetement&action=add1'">
 </body>
 
 
