@@ -13,9 +13,11 @@ class annonce extends fonction{
 	private $id_marque;
 	private $id_categorie;
 	private $id_pers;
+	private $status;
 
 
-	public function __construct($titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$id_pers){
+	public function __construct($id_an,$titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$id_pers,$status){
+		$this->id_an = $id_an;
 		$this->titre_an = $titre_an;
 		$this->prix_an = $prix_an;
 		$this->description_an = $description_an;
@@ -26,16 +28,21 @@ class annonce extends fonction{
 		$this->id_marque=$id_marque;
 		$this->id_categorie=$id_categorie;
 		$this->id_pers=$id_pers;
+		$this->status=$status;
+
+		
 	}
 
 	public function add($cnx){
-		$res=$cnx->prepare("insert into annonce(titre_an,prix_an,description_an,date_pub_an,couleur_an,region_an,id_marque, id_categorie,taille,id_pers) VALUES (?,?,?,?,?,?,?,?,?,?)");
-		$res->execute([$this->titre_an, $this->prix_an, $this->description_an,$this->date_pub_an,$this->couleur_an,$this->region_an, $this->taille,$this->id_marque,$this->id_categorie,$this->id_pers]);
-		$this->redirect("index.php?controller=annonce&action=liste");
+
+		$res=$cnx->prepare("insert into annonce(titre_an,prix_an,description_an,date_pub_an,couleur_an,region_an,id_marque, id_categorie,taille,id_pers,status) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+		$res->execute([$this->titre_an, $this->prix_an, $this->description_an,$this->date_pub_an,$this->couleur_an,$this->region_an,$this->id_marque,$this->id_categorie, $this->taille,$this->id_pers,$this->status]);
+		
+		$this->redirect("dashboard.php?controller=annonce&action=liste");
 	}
 	
 	public function edit($cnx){
-		$res=$cnx->prepare("update annonce set titre_an=?,prix_an=?,description_an=?,date_pub_an=?,couleur_an=?,region_an=?,id_marque=?, id_categorie=?,taille=?,id_pers=? where id_an=?");
+		$res=$cnx->prepare("update annonce set titre_an=?,prix_an=?,description_an=?,date_pub_an=?,couleur_an=?,region_an=?,id_marque=?, id_categorie=?,taille=?,id_pers=?,status=? where id_an=?");
 		$res->bindParam(1,$this->titre_an);
 		$res->bindParam(2,$this->prix_an);
 		$res->bindParam(3,$this->description_an);
@@ -46,19 +53,20 @@ class annonce extends fonction{
 		$res->bindParam(8,$this->id_categorie);
 		$res->bindParam(9,$this->taille);
 		$res->bindParam(10,$this->id_pers);
-		$res->bindParam(11,$this->id_an);
+		$res->bindParam(11,$this->status);
+		$res->bindParam(12,$this->id_an);
 		$res->execute();
-		$this->redirect("index.php?controller=annonce&action=liste");
+		$this->redirect("dashboard.php?controller=annonce&action=liste");
 	}
 	
 	public function supp($cnx){
 		$cnx->exec("delete from annonce where id_an='".$this->id_an."'");
 		unlink("photos/".$this->photo);
-		$this->redirect("index.php?controller=annonce&action=liste");
+		$this->redirect("dashboard.php?controller=annonce&action=liste");
 	}
 	
-	public function liste($cnx){
-		$annonces=$cnx->query("select * from annonce")->fetchAll(PDO::FETCH_OBJ);
+	public function liste($cnx,$critere){
+		$annonces=$cnx->query("select * from annonce ".$critere)->fetchAll(PDO::FETCH_OBJ);
 		return $annonces;
 	}
 	
@@ -66,6 +74,13 @@ class annonce extends fonction{
 		$annonce=$cnx->query("select * from annonce where id_an='".$this->id_an."'")->fetch(PDO::FETCH_OBJ);
 		return $annonce;
 	}
+
+	public function count($cnx,$critere){
+		$nb=$cnx->query("select count(*) from annonce where status='".$critere."'")->fetch(PDO::FETCH_OBJ);
+		return $nb;
+	}
+	
+
 	
 }
 ?>

@@ -3,9 +3,8 @@ session_start();
 include_once 'includes/security.php'; 
 include_once "includes/connexion.php";
 //initialisation des variables $controller et $action
-
-$controller = "personne";
-$action = "add1";
+$controller = "annonce";
+$action = "liste";
 //Recupération
 if (isset($_REQUEST["controller"]))
     $controller = $_REQUEST["controller"];

@@ -76,5 +76,7 @@ switch($action){
 	
 	case "edit":$pers->edit($cnx);
 	break;
+
+	
 }
 ?>

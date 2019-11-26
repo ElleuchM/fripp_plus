@@ -41,13 +41,13 @@ class personne extends fonction{
 		$res->bindParam(6,$this->status);
 		$res->bindParam(7,$this->id);
 		$res->execute();
-		$this->redirect("index.php?controller=personne&action=liste");
+		$this->redirect("dashboard.php?controller=personne&action=liste");
 	}
 	
 	public function supp($cnx){
 		
 		$cnx->exec("delete from personne where id='".$this->id."'");
-		$this->redirect("index.php?controller=personne&action=liste");
+		$this->redirect("dashboard.php?controller=personne&action=liste");
 	}
 	
 	public function liste($cnx){
@@ -70,7 +70,14 @@ $personne=$cnx->query("select * from personne where email_pers='".$this->email_p
 if(is_object($personne)){
 	$_SESSION['email_pers']=$this->email_pers;
 	$_SESSION['mdp_pers']=$this->mdp_pers;
-	$this->redirect("index.php");
+	$_SESSION['id']=$personne->id;
+	$_SESSION['id_role']=$personne->id_role;
+	if($personne->id_role='1'){
+		$this->redirect("dashboard.php");
+	}else {
+		$this->redirect("index.php");
+
+	}
 }else{
 	$this->redirect("login.php?error=1");
 }
