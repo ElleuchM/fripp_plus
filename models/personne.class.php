@@ -70,6 +70,8 @@ $personne=$cnx->query("select * from personne where email_pers='".$this->email_p
 if(is_object($personne)){
 	$_SESSION['email_pers']=$this->email_pers;
 	$_SESSION['mdp_pers']=$this->mdp_pers;
+	$_SESSION['id']=$personne->id;
+	$_SESSION['id_role']=$personne->id_role;
 	$this->redirect("index.php");
 }else{
 	$this->redirect("login.php?error=1");
