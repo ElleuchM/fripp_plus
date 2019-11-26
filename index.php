@@ -4,8 +4,11 @@ include_once 'includes/security.php';
 include_once "includes/connexion.php";
 //initialisation des variables $controller et $action
 
-$controller = "annonce";
+
+$controller = "personne";
+
 $action = "liste";
+
 //Recupération
 if (isset($_REQUEST["controller"]))
     $controller = $_REQUEST["controller"];
