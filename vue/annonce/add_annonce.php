@@ -1,10 +1,12 @@
-<?php
 
-
-?>
 <h1>Ajouter annonce </h1>
 
-<form method="post" action="index.php?controller=annonce&action=add" enctype="multipart/form-data">
+
+
+  
+
+
+<form id="ff" method="post" action="index.php?controller=annonce&action=add" enctype="multipart/form-data">
 	<br>Nom annonce: <input type="text" name="titre_an" required>
 	<br> Prix annonce:<input type="text" name="prix_an" required>
 	<br> Description:<TEXTAREA name="description_an" rows=4 cols=40>Valeur par défaut</TEXTAREA>
@@ -54,7 +56,63 @@
 		<option value="autre">autre</option>
        
 	</select> 
+	<br>photo : <input id="image" type="file" name="photos[]" multiple="multiple" onchange="readURL(this);">
+	
+	<div class="gallery" width="180"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function readURL(input) {
+
+		if ($('#image')[0].files.length > 10) 
+		{
+			alert('choisir maximume 10 images');
+			
+			0
+		} 
+	
+}           
+
+$(function() {
+    // Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+        if (input.files) {
+            var filesAmount = input.files.length;
+		if(filesAmount>10)
+			filesAmount=10;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img width="300">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#image').on('change', function() {
+        imagesPreview(this, 'div.gallery');
+    });
+});		
+      
+</script>
+
+
+
+
+
+
+
+
+
+
 
 	<br> <input type="submit" name="submit" value="ajouter">	
+
+	
 </form>
 

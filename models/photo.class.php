@@ -14,7 +14,7 @@ class photo extends fonction{
 	public function add($cnx){
 		$res=$cnx->prepare("insert into photo (nom_photo,id_an) values(?,?)");
 		$res->execute([$this->nom_photo,$this->id_an]);
-		$this->redirect("index.php?controller=photo&action=liste");
+		//$this->redirect("index.php?controller=photo&action=liste");
 	}
 	public function edit($cnx){
 		$res=$cnx->prepare("update photo set nom_photo=? where id=?");
@@ -36,6 +36,13 @@ class photo extends fonction{
 	
 	public function detail($cnx){
 		$photo=$cnx->query("select * from photo where id='".$this->id."'")->fetch(PDO::FETCH_OBJ);
+		return $photo;
+	}
+	
+	public function detail_photos($cnx){
+		
+		$photo=$cnx->query("select * from photo where id_an='".$this->id_an."'")->fetchAll(PDO::FETCH_OBJ);
+		
 		return $photo;
 	}
 

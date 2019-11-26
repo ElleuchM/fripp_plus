@@ -1,4 +1,6 @@
-  <div class="site-blocks-cover overlay" style="background-image: url(ac/images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+
+<div class="site-blocks-cover overlay" style="background-image: url(ac/images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+
     <div class="container">
       <div class="row align-items-center justify-content-center text-center">
 
@@ -13,22 +15,28 @@
           </div>
           
           <div class="form-search-wrap" data-aos="fade-up" data-aos-delay="200">
-            <form method="post">
+
+            <form method="post" action="index.php?controller=annonce&action=liste2">
               <div class="row align-items-center">
                 <div class="col-lg-12 mb-4 mb-xl-0 col-xl-4">
-                  <input type="text" class="form-control rounded" placeholder="Que cherchez-vous?">
+                  <input type="text" class="form-control rounded" name="rech_nom" placeholder="Que cherchez-vous?">
+
                 </div>
                 <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                   <div class="wrap-icon">
                     <span class="icon icon-room"></span>
-                    <input type="text" class="form-control rounded" placeholder="Emplacement">
+
+                    <input type="text" class="form-control rounded" name="rech_region" placeholder="Emplacement">
+
                   </div>
 
                 </div>
                 <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                   <div class="select-wrap">
                     <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
-                    <select class="form-control rounded" name="" id="">
+
+                    <select class="form-control rounded" name="rech_categorie" id="">
+
                       <option value="">Toutes les catégories</option>
                       <option value="">Real Estate</option>
                       <option value="">Books &amp; Magazines</option>
