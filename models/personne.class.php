@@ -72,7 +72,8 @@ if(is_object($personne)){
 	$_SESSION['mdp_pers']=$this->mdp_pers;
 	$_SESSION['id']=$personne->id;
 	$_SESSION['id_role']=$personne->id_role;
-	if($personne->id_role='1'){
+
+	if($personne->id_role=='1'){
 		$this->redirect("dashboard.php");
 	}else {
 		$this->redirect("index.php");

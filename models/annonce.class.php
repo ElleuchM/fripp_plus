@@ -14,9 +14,11 @@ class annonce extends fonction{
 	private $id_categorie;
 	private $id_pers;
 	private $status;
+	private $photos=array();
 
 
-	public function __construct($id_an,$titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$id_pers,$status){
+
+	public function __construct($id_an,$titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$id_pers,$photos,$status){
 		$this->id_an = $id_an;
 		$this->titre_an = $titre_an;
 		$this->prix_an = $prix_an;
@@ -29,16 +31,20 @@ class annonce extends fonction{
 		$this->id_categorie=$id_categorie;
 		$this->id_pers=$id_pers;
 		$this->status=$status;
-
-		
+		$this->photos=$photos;
 	}
 
 	public function add($cnx){
 
 		$res=$cnx->prepare("insert into annonce(titre_an,prix_an,description_an,date_pub_an,couleur_an,region_an,id_marque, id_categorie,taille,id_pers,status) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 		$res->execute([$this->titre_an, $this->prix_an, $this->description_an,$this->date_pub_an,$this->couleur_an,$this->region_an,$this->id_marque,$this->id_categorie, $this->taille,$this->id_pers,$this->status]);
+		$id=$cnx->lastInsertId();
+		foreach ($this->photos as $photo){
+			$ph= new photo("",$photo,$id);
+			$ph-> add($cnx);
+        }
 		
-		$this->redirect("dashboard.php?controller=annonce&action=liste");
+		$this->redirect("index.php?controller=annonce&action=liste");
 	}
 	
 	public function edit($cnx){
@@ -60,13 +66,22 @@ class annonce extends fonction{
 	}
 	
 	public function supp($cnx){
+		$ph= new photo("","",$this->id_an);
+		$photo=$ph-> detail_photos($cnx);
 		$cnx->exec("delete from annonce where id_an='".$this->id_an."'");
-		unlink("photos/".$this->photo);
-		$this->redirect("dashboard.php?controller=annonce&action=liste");
+		foreach($photo as $p){	
+		unlink("photos/".$p->nom_photo);
+	}
+		$this->redirect("index.php?controller=annonce&action=liste");
+
 	}
 	
 	public function liste($cnx,$critere){
 		$annonces=$cnx->query("select * from annonce ".$critere)->fetchAll(PDO::FETCH_OBJ);
+		return $annonces;
+	}
+	public function recherche_avance($cnx, $ch){
+		$annonces=$cnx->query("select * from annonce where ".$ch)->fetchAll(PDO::FETCH_OBJ);
 		return $annonces;
 	}
 	
