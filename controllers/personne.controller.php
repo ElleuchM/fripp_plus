@@ -36,7 +36,7 @@ $tel_pers=$_POST['tel_pers'];
 
 if(isset($_POST['status']))
 $status=$_POST['status'];
-else $status='Non-acceptée';
+else $status='non acceptee';
 
 
 //creation de l'objet
@@ -69,6 +69,21 @@ switch($action){
 	
 	include "vue/admin/liste_admin.php";
 	break;
+
+	case "listeN":		
+		$personnes=$pers->liste($cnx,"where status like 'non accepte'");
+		include "vue/admin/liste_admin.php";
+		break;
+
+		case "listeO":		
+			$personnes=$pers->liste($cnx,"where status like 'Accepte'");
+			include "vue/admin/liste_admin.php";
+			break;
+	
+
+	include "vue/admin/liste_admin.php";
+	break;
+
 	
 	case "edit1":$personne=$pers->detail($cnx);
 	include "vue/admin/modifier_admin.php";
@@ -76,5 +91,8 @@ switch($action){
 	
 	case "edit":$pers->edit($cnx);
 	break;
+
+
+	
 }
 ?>

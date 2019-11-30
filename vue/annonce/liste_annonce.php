@@ -145,6 +145,7 @@
               <h3><a href="listings-single.html">' . $annonce->titre_an . '</a></h3>
               <address>' . $annonce->region_an . '</address>
             </div>
+
           </div>
       </div>
 

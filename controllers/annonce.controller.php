@@ -17,6 +17,11 @@ $region_an="";
 $taille="";
 $id_marque="";
 $id_categorie="";
+if(isset($_POST['status']))
+$status=$_POST['status'];
+else $status='non acceptee';
+
+
 $photos=array();
 
 $rech_region="";
@@ -55,6 +60,8 @@ if (isset($_POST['id_marque']))
 
 if (isset($_POST['id_categorie']))
 	$id_categorie = $_POST['id_categorie'];
+
+
 
 //************************************************************************************************************************* */
 
@@ -117,13 +124,14 @@ if(isset($_FILES['photos']))
 
 //************************************************************************************************************************* */
 //creation de l'objet
-$ann = new annonce($id_an,$titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$_SESSION['id'],$photos);
+$ann = new annonce($id_an,$titre_an,$prix_an,$description_an,$date_pub_an,$couleur_an,$region_an,$taille,$id_marque,$id_categorie,$_SESSION['id'],$photos,$status);
+
 
 
 
 switch ($action) {
 	case "add1":
-		include "vue/annonce/add_annonce.php";
+		include "vue/annonce/add_annonce.php"; 
         break;
 
 	case "add":
@@ -144,11 +152,46 @@ switch ($action) {
 		$ann->supp($cnx);
         break; 
          
-	case "liste":
-		
-		$annonces=$ann->liste($cnx);
-	
+	case "liste":		 
+		$annonces=$ann->liste($cnx,"");
+
 	    include "vue/annonce/liste_annonce.php";
 		break;
+		case "listeN":		
+			$annonces=$ann->liste($cnx,"where status like 'non acceptée'");
+			include "vue/annonce/liste_annonce.php";
+			break;
+			case "listeO":		
+				$annonces=$ann->liste($cnx,"where status like 'Accepte'");
+				include "vue/annonce/liste_annonce.php";
+				break;
+	
+		case "stat":				
+			$nb_oui=$ann->count($cnx,'Accepte'); 
+			$nb_non=$ann->count($cnx,'non accepte');
+
+			include "models/personne.class.php";
+			$pers=new personne('','','','','','','','');
+			$annonces=$ann->liste($cnx,"");
+
+			$nb_oui_per=$pers->count($cnx,'Accepte'); 
+			$nb_non_per=$pers->count($cnx,'non accepte');
+
+			foreach($nb_oui as $oui){
+			}
+			foreach($nb_non as $non){
+			}
+
+			foreach($nb_oui_per as $oui_per){
+			}
+			foreach($nb_non_per as $non_per){
+			}
+
+			include "vue/admin/statistique.php";
+
+			break;
+	
+
+	
 
 }
