@@ -8,7 +8,7 @@ $action='stat';
 //Recupération 
 if(isset($_REQUEST['controller'])) 
 $controller =$_REQUEST['controller']; 
-if(isset($_REQUEST['action'])) 
+if(isset($_REQUEST['action']))  
 $action =$_REQUEST['action']; ?> 
 
 <!DOCTYPE html>
@@ -17,6 +17,7 @@ $action =$_REQUEST['action']; ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 3 | Widgets</title>
+  
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -376,5 +377,8 @@ $action =$_REQUEST['action']; ?>
 <script src="assets/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="assets/js/demo.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmpl4Y6-cdI6PuHEgvMyIxA6eC81Zpbnw&libraries=places"></script>
+
 </body>
 </html>

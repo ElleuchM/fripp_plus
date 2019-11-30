@@ -7,7 +7,7 @@
   
 
 
-<form id="ff" method="post" action="index.php?controller=annonce&action=add" enctype="multipart/form-data">
+<form id="ff" method="post" action="dashboard.php?controller=annonce&action=add" enctype="multipart/form-data">
 	<br>Nom annonce: <input type="text" name="titre_an" required>
 	<br> Prix annonce:<input type="text" name="prix_an" required>
 	<br> Description:<TEXTAREA name="description_an" rows=4 cols=40>Valeur par défaut</TEXTAREA>

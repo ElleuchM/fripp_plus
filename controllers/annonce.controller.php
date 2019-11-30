@@ -19,7 +19,7 @@ $id_marque="";
 $id_categorie="";
 if(isset($_POST['status']))
 $status=$_POST['status'];
-else $status='non acceptée';
+else $status='non acceptee';
 
 
 $photos=array();
@@ -152,7 +152,7 @@ switch ($action) {
 		$ann->supp($cnx);
         break; 
          
-	case "liste":		
+	case "liste":		 
 		$annonces=$ann->liste($cnx,"");
 
 	    include "vue/annonce/liste_annonce.php";
@@ -161,12 +161,30 @@ switch ($action) {
 			$annonces=$ann->liste($cnx,"where status like 'non acceptée'");
 			include "vue/annonce/liste_annonce.php";
 			break;
+			case "listeO":		
+				$annonces=$ann->liste($cnx,"where status like 'Accepte'");
+				include "vue/annonce/liste_annonce.php";
+				break;
+	
 		case "stat":				
-			$nb_oui=$ann->count($cnx,'acceptée'); 
-			$nb_non=$ann->count($cnx,'non acceptée');
+			$nb_oui=$ann->count($cnx,'Accepte'); 
+			$nb_non=$ann->count($cnx,'non accepte');
+
+			include "models/personne.class.php";
+			$pers=new personne('','','','','','','','');
+			$annonces=$ann->liste($cnx,"");
+
+			$nb_oui_per=$pers->count($cnx,'Accepte'); 
+			$nb_non_per=$pers->count($cnx,'non accepte');
+
 			foreach($nb_oui as $oui){
 			}
 			foreach($nb_non as $non){
+			}
+
+			foreach($nb_oui_per as $oui_per){
+			}
+			foreach($nb_non_per as $non_per){
 			}
 
 			include "vue/admin/statistique.php";

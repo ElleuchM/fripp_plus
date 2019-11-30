@@ -1,5 +1,5 @@
 <h1>Modifier marque</h1>
-<form method="post" action="index.php?controller=marque&action=edit" enctype="multipart/form-data">
+<form method="post" action="dashboard.php?controller=marque&action=edit" enctype="multipart/form-data">
 
 <br>nom categorie : <input type="text" name="nom_marq" value="<?php echo $marque->nom_marq;?>" required>
 

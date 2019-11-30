@@ -30,8 +30,8 @@ foreach($personnes as $personne){
 			<td>".$personne->tel_pers."</td>
 			<td>".$personne->status."</td>
 			<td>".$personne->id_role."</td>
-			<td> <a href='index.php?controller=personne&action=supp&id=".$personne->id."'>supp</a> 
-			<a href='index.php?controller=personne&action=edit1&id=".$personne->id."'>modif</a></td>
+			<td> <a href='dashboard.php?controller=personne&action=supp&id=".$personne->id."'>supp</a> 
+			<a href='dashboard.php?controller=personne&action=edit1&id=".$personne->id."'>modif</a></td>
 
 
 

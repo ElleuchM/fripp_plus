@@ -1,5 +1,5 @@
 <h1>Liste des categories</h1>
-<input type="button" value="nouveau inscrit" onclick="window.location.href='index.php?controller=categorie&action=add1'">
+<input type="button" value="nouveau inscrit" onclick="window.location.href='dashboard.php?controller=categorie&action=add1'">
 <?php
 echo "<table border=1>
 <tr>

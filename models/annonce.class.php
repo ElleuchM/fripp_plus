@@ -96,6 +96,12 @@ class annonce extends fonction{
 	}
 	
 
+	public function count_par_region($cnx){
+		$nb=$cnx->query("select region_an as 'c1' ,count(*) as 'c2' from annonce group by region_an")->fetchAll(PDO::FETCH_OBJ);
+		return $nb;
+	}
+
+
 	
 }
 ?>

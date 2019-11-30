@@ -27,7 +27,44 @@ class personne extends fonction{
 
 	public function add($cnx){
 		$res=$cnx->prepare("insert into personne (id_role,nom_pers, prenom_pers,email_pers, mdp_pers, tel_pers,status) values(?,?,?,?,?,?,?)");
-		$res->execute([$this->id_role,$this->nom_pers, $this->prenom_pers,$this->email_pers,$this->mdp_pers,$this->tel_pers,$this->status]);
+//$res->execute([$this->id_role,$this->nom_pers, $this->prenom_pers,$this->email_pers,$this->mdp_pers,$this->tel_pers,$this->status]);
+
+		require 'PHPMailer/PHPMailerAutoload.php';
+		require 'PHPMailer/credential.php';
+
+		$mail = new PHPMailer;
+
+		// $mail->SMTPDebug = 4;                               // Enable verbose debug output
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = EMAIL;                 // SMTP username
+		$mail->Password = PASS;                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+
+		$mail->setFrom(EMAIL, 'FRIP LOCAL');
+		$mail->addAddress($_POST['email_pers']);     // Add a recipient
+
+		$mail->addReplyTo(EMAIL);
+		// print_r($_FILES['file']); exit;
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Body    = '<div>Bonjour <h1>'.$_POST["nom_pers"]." ".$_POST["prenom_pers"].' </h1> ,vous étes le bienvenue   <br>
+		votre login : '.$_POST["email_pers"].' <br>
+		mot de passe : '.$_POST["mdp_pers"].'</div>';
+
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;exit();
+		} else {
+			//echo 'Message has been sent';
+			echo '<script>alert("Email a été envoyé à votre email veuillez vérifier");</script>';
+		}
+
+
+
 		$this->redirect("index.php?controller=personne&action=liste");
 	}
 	
@@ -88,6 +125,12 @@ if(is_object($personne)){
 	session_destroy();
 	$this->redirect("login.php");
 	}
+
+	public function count($cnx,$critere){
+		$nb=$cnx->query("select count(*) from personne where status='".$critere."'")->fetch(PDO::FETCH_OBJ);
+		return $nb;
+	}
+
 
 
 }
