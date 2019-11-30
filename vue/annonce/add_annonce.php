@@ -102,7 +102,7 @@
 
 						<div class="col-md-12">
 							<label class="">Photos: </label>
-							<input class="form-control" type="image" id="text" alt="Submit" name="photos[]" multiple="multiple" onchange="readURL(this);">
+							<input type="file" id="text" alt="Submit" name="photos[]" multiple="multiple" onchange="readURL(this);">
 							<div class="gallery" width="180"></div>
 						</div>
 					</div>
