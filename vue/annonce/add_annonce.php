@@ -3,9 +3,6 @@
 
 
 
-  
-
-
 <form id="ff" method="post" action="index.php?controller=annonce&action=add" enctype="multipart/form-data">
 	<br>Nom annonce: <input type="text" name="titre_an" required>
 	<br> Prix annonce:<input type="text" name="prix_an" required>
@@ -56,60 +53,86 @@
 		<option value="autre">autre</option>
        
 	</select> 
-	<br>photo : <input id="image" type="file" name="photos[]" multiple="multiple" onchange="readURL(this);">
+
 	
-	<div class="gallery" width="180"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link rel='stylesheet' href='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css' />
+  <link rel='stylesheet' href='https://unpkg.com/filepond/dist/filepond.min.css' />
+  <style>.fileBox{ width: 80%;    margin-left: auto;    margin-right: auto;    margin-top: 40px;    background: #fbfbb8;    padding: 20px;    border: 3px solid black;}</style>
 
-<script type="text/javascript">
-    function readURL(input) {
-
-		if ($('#image')[0].files.length > 10) 
-		{
-			alert('choisir maximume 10 images');
-			
-			0
-		} 
-	
-}           
-
-$(function() {
-    // Multiple images preview in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-
-        if (input.files) {
-            var filesAmount = input.files.length;
-		if(filesAmount>10)
-			filesAmount=10;
-            for (i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-
-                reader.onload = function(event) {
-                    $($.parseHTML('<img width="300">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-                }
-
-                reader.readAsDataURL(input.files[i]);
-            }
-        }
-
-    };
-
-    $('#image').on('change', function() {
-        imagesPreview(this, 'div.gallery');
-    });
-});		
+<div class="fileBox">
+    
+  
+   
+    <input type="file" class="filepond" name="filepond[]" multiple data-max-file-size="6MB" data-max-files="10" />
+    
       
-</script>
+   
+</div>
+<script src='https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js'></script>
+  <script src='https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js'></script>
+  <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+  <script src='https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js'></script>
+  <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+  <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+  <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+  <script src='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js'></script>
+  <script src='https://unpkg.com/filepond/dist/filepond.min.js'></script>
+<script>
+  // register desired plugins...
+  FilePond.registerPlugin(
+// encodes the file as base64 data...
+   FilePondPluginFileEncode,
+// validates the size of the file...
+   FilePondPluginFileValidateSize,
+   
+   // validates the file type...
+   FilePondPluginFileValidateType,
+// corrects mobile image orientation...
+   FilePondPluginImageExifOrientation,
+   
+   // calculates & dds cropping info based on the input image dimensions and the set crop ratio
+   FilePondPluginImageCrop,
+   
+   //  calculates & adds resize information
+   FilePondPluginImageResize,
+   
+   // applies the image modifications supplied by the Image crop and Image resize plugins before the image is uploaded
+   FilePondPluginImageTransform,
+// previews dropped images...
+   FilePondPluginImagePreview
+);
+// Select the file input and use create() to turn it into a pond
+  FilePond.create( document.querySelector('.filepond'), { 
+   
+   allowMultiple: true,
+   allowFileEncode: true,
+   maxFiles:10,
+   required: true,
+   maxParallelUploads:10,
+   instantUpload:false,
+   acceptedFileTypes: ['image/*'],
+   imageResizeTargetWidth: 50,
+   //imageResizeMode: 'contain',
+   imageCropAspectRatio: '1:1',
+   imageTransformVariants: {
+    
+    'v3_200px': transforms => {
+     transforms.resize.size.width = 900;
+     return transforms;
+    }
+   },
+   imageTransformOutputQuality: 100,
+   imageTransformOutputMimeType: 'image/jpeg',
+   
+   onaddfile: (err, fileItem) => {
+    console.log(err, fileItem.getMetadata('resize'));
+   }
+   
+   
+  });
+  </script>
 
-
-
-
-
-
-
-
-
-
+ 
 
 	<br> <input type="submit" name="submit" value="ajouter">	
 

@@ -77,6 +77,10 @@ class annonce extends fonction{
 		$annonces=$cnx->query("select * from annonce")->fetchAll(PDO::FETCH_OBJ);
 		return $annonces;
 	}
+	public function list_by_user($cnx){
+		$annonces=$cnx->query("select * from annonce  where id_pers ='".$this->id_pers."'")->fetchAll(PDO::FETCH_OBJ);
+		return $annonces;
+	}
 	public function recherche_avance($cnx, $ch){
 		$annonces=$cnx->query("select * from annonce where ".$ch)->fetchAll(PDO::FETCH_OBJ);
 		return $annonces;
