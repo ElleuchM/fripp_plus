@@ -8,7 +8,7 @@
 							<i class="fas fa-user-plus"></i></i>
 							Liste des categories
 						</h3>
-						<input class="btn btn-block btn-secondary btn-sm col-3 float-right" type="button" value="Nouveau categorie" onclick="window.location.href='dashboard.php?controller=categorie&action=add1'">
+						<input class="btn btn-block btn-outline-secondary btn-sm col-3 float-right" type="button" value="Nouveau categorie" onclick="window.location.href='dashboard.php?controller=categorie&action=add1'">
 					</div>
 
 					<?php
