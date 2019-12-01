@@ -49,6 +49,7 @@ switch($action){
 	case "login":
 		
 		$pers->login($cnx);
+<<<<<<< Updated upstream
 	break;
 	
 	case "logout":$pers->logout();
@@ -60,6 +61,31 @@ switch($action){
 	case "add":$pers->add($cnx);
 	break;
 	
+=======
+		break;
+
+	case "login_adm1":
+		include "vue/abonnee/abn_auth.php";
+		break;
+
+	case "login_adm":
+		$pers->login($cnx);
+		break;
+
+	case "logout":
+		$pers->logout();
+		break;
+
+	case "add1":
+		include "vue/abonnee/abn_register.php";
+		break;
+
+
+	case "add":
+		$pers->add($cnx);
+		break;
+
+>>>>>>> Stashed changes
 	case "supp":
 		
 		$pers->supp($cnx);
